@@ -1069,6 +1069,7 @@ static const char __pyx_k_i2c[] = "i2c";
 static const char __pyx_k_res[] = "res";
 static const char __pyx_k_val[] = "val";
 static const char __pyx_k_byte[] = "byte";
+static const char __pyx_k_flag[] = "flag";
 static const char __pyx_k_init[] = "__init__";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_port[] = "port";
@@ -1108,6 +1109,7 @@ static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_cmd;
 static PyObject *__pyx_n_s_delay;
 static PyObject *__pyx_n_s_doc;
+static PyObject *__pyx_n_s_flag;
 static PyObject *__pyx_n_s_i2c;
 static PyObject *__pyx_n_s_i2c___init;
 static PyObject *__pyx_kp_s_i2c_pyx;
@@ -1787,7 +1789,7 @@ static PyObject *__pyx_pf_3i2c_3i2c_6read_block(CYTHON_UNUSED PyObject *__pyx_se
  *     def read_block(self, cmd, byte):
  *         return self.sensor.read_i2c_block_data(self.address, cmd, byte)             # <<<<<<<<<<<<<<
  *     def res(self, cmd, timeout):
- *         for delay in range(timeout):
+ *         flag = False
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_sensor); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
@@ -1878,8 +1880,8 @@ static PyObject *__pyx_pf_3i2c_3i2c_6read_block(CYTHON_UNUSED PyObject *__pyx_se
  *     def read_block(self, cmd, byte):
  *         return self.sensor.read_i2c_block_data(self.address, cmd, byte)
  *     def res(self, cmd, timeout):             # <<<<<<<<<<<<<<
+ *         flag = False
  *         for delay in range(timeout):
- *             val = self.read(cmd)
  */
 
 /* Python wrapper */
@@ -1956,6 +1958,7 @@ static PyObject *__pyx_pw_3i2c_3i2c_9res(PyObject *__pyx_self, PyObject *__pyx_a
 }
 
 static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_cmd, PyObject *__pyx_v_timeout) {
+  int __pyx_v_flag;
   CYTHON_UNUSED PyObject *__pyx_v_delay = NULL;
   PyObject *__pyx_v_val = NULL;
   PyObject *__pyx_r = NULL;
@@ -1973,25 +1976,34 @@ static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyO
   /* "i2c.pyx":19
  *         return self.sensor.read_i2c_block_data(self.address, cmd, byte)
  *     def res(self, cmd, timeout):
+ *         flag = False             # <<<<<<<<<<<<<<
+ *         for delay in range(timeout):
+ *             val = self.read(cmd)
+ */
+  __pyx_v_flag = 0;
+
+  /* "i2c.pyx":20
+ *     def res(self, cmd, timeout):
+ *         flag = False
  *         for delay in range(timeout):             # <<<<<<<<<<<<<<
  *             val = self.read(cmd)
- *             if(val&0x01): return True
+ *             if(val&0x01):
  */
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_timeout);
   __Pyx_GIVEREF(__pyx_v_timeout);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_timeout);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
     __pyx_t_1 = __pyx_t_2; __Pyx_INCREF(__pyx_t_1); __pyx_t_3 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_3 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __pyx_t_3 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -1999,17 +2011,17 @@ static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyO
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 20, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 20, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -2019,7 +2031,7 @@ static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyO
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 19, __pyx_L1_error)
+          else __PYX_ERR(0, 20, __pyx_L1_error)
         }
         break;
       }
@@ -2028,14 +2040,14 @@ static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyO
     __Pyx_XDECREF_SET(__pyx_v_delay, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "i2c.pyx":20
- *     def res(self, cmd, timeout):
+    /* "i2c.pyx":21
+ *         flag = False
  *         for delay in range(timeout):
  *             val = self.read(cmd)             # <<<<<<<<<<<<<<
- *             if(val&0x01): return True
- * #            time.sleep(0.001)
+ *             if(val&0x01):
+ *                 flag = True
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_read); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_read); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -2048,13 +2060,13 @@ static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyO
       }
     }
     if (!__pyx_t_6) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_cmd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_cmd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_5)) {
         PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_cmd};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else
@@ -2062,19 +2074,19 @@ static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyO
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
         PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_cmd};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else
       #endif
       {
-        __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error)
+        __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6); __pyx_t_6 = NULL;
         __Pyx_INCREF(__pyx_v_cmd);
         __Pyx_GIVEREF(__pyx_v_cmd);
         PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_v_cmd);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       }
@@ -2083,51 +2095,65 @@ static PyObject *__pyx_pf_3i2c_3i2c_8res(CYTHON_UNUSED PyObject *__pyx_self, PyO
     __Pyx_XDECREF_SET(__pyx_v_val, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "i2c.pyx":21
+    /* "i2c.pyx":22
  *         for delay in range(timeout):
  *             val = self.read(cmd)
- *             if(val&0x01): return True             # <<<<<<<<<<<<<<
- * #            time.sleep(0.001)
- *         return False
+ *             if(val&0x01):             # <<<<<<<<<<<<<<
+ *                 flag = True
+ *             #time.sleep(0.001)
  */
-    __pyx_t_2 = __Pyx_PyInt_AndObjC(__pyx_v_val, __pyx_int_1, 0x01, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_AndObjC(__pyx_v_val, __pyx_int_1, 0x01, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 21, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 22, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_8) {
-      __Pyx_XDECREF(__pyx_r);
-      __Pyx_INCREF(Py_True);
-      __pyx_r = Py_True;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      goto __pyx_L0;
+
+      /* "i2c.pyx":23
+ *             val = self.read(cmd)
+ *             if(val&0x01):
+ *                 flag = True             # <<<<<<<<<<<<<<
+ *             #time.sleep(0.001)
+ *         return flag
+ */
+      __pyx_v_flag = 1;
+
+      /* "i2c.pyx":22
+ *         for delay in range(timeout):
+ *             val = self.read(cmd)
+ *             if(val&0x01):             # <<<<<<<<<<<<<<
+ *                 flag = True
+ *             #time.sleep(0.001)
+ */
     }
 
-    /* "i2c.pyx":19
- *         return self.sensor.read_i2c_block_data(self.address, cmd, byte)
+    /* "i2c.pyx":20
  *     def res(self, cmd, timeout):
+ *         flag = False
  *         for delay in range(timeout):             # <<<<<<<<<<<<<<
  *             val = self.read(cmd)
- *             if(val&0x01): return True
+ *             if(val&0x01):
  */
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "i2c.pyx":23
- *             if(val&0x01): return True
- * #            time.sleep(0.001)
- *         return False             # <<<<<<<<<<<<<<
+  /* "i2c.pyx":25
+ *                 flag = True
+ *             #time.sleep(0.001)
+ *         return flag             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(Py_False);
-  __pyx_r = Py_False;
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_flag); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
 
   /* "i2c.pyx":18
  *     def read_block(self, cmd, byte):
  *         return self.sensor.read_i2c_block_data(self.address, cmd, byte)
  *     def res(self, cmd, timeout):             # <<<<<<<<<<<<<<
+ *         flag = False
  *         for delay in range(timeout):
- *             val = self.read(cmd)
  */
 
   /* function exit code */
@@ -2191,6 +2217,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cmd, __pyx_k_cmd, sizeof(__pyx_k_cmd), 0, 0, 1, 1},
   {&__pyx_n_s_delay, __pyx_k_delay, sizeof(__pyx_k_delay), 0, 0, 1, 1},
   {&__pyx_n_s_doc, __pyx_k_doc, sizeof(__pyx_k_doc), 0, 0, 1, 1},
+  {&__pyx_n_s_flag, __pyx_k_flag, sizeof(__pyx_k_flag), 0, 0, 1, 1},
   {&__pyx_n_s_i2c, __pyx_k_i2c, sizeof(__pyx_k_i2c), 0, 0, 1, 1},
   {&__pyx_n_s_i2c___init, __pyx_k_i2c___init, sizeof(__pyx_k_i2c___init), 0, 0, 1, 1},
   {&__pyx_kp_s_i2c_pyx, __pyx_k_i2c_pyx, sizeof(__pyx_k_i2c_pyx), 0, 0, 1, 0},
@@ -2225,7 +2252,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 20, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -2287,13 +2314,13 @@ static int __Pyx_InitCachedConstants(void) {
  *     def read_block(self, cmd, byte):
  *         return self.sensor.read_i2c_block_data(self.address, cmd, byte)
  *     def res(self, cmd, timeout):             # <<<<<<<<<<<<<<
+ *         flag = False
  *         for delay in range(timeout):
- *             val = self.read(cmd)
  */
-  __pyx_tuple__9 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_cmd, __pyx_n_s_timeout, __pyx_n_s_delay, __pyx_n_s_val); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_cmd, __pyx_n_s_timeout, __pyx_n_s_flag, __pyx_n_s_delay, __pyx_n_s_val); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_i2c_pyx, __pyx_n_s_res, 18, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_i2c_pyx, __pyx_n_s_res, 18, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2541,8 +2568,8 @@ static int __pyx_pymod_exec_i2c(PyObject *__pyx_pyinit_module)
  *     def read_block(self, cmd, byte):
  *         return self.sensor.read_i2c_block_data(self.address, cmd, byte)
  *     def res(self, cmd, timeout):             # <<<<<<<<<<<<<<
+ *         flag = False
  *         for delay in range(timeout):
- *             val = self.read(cmd)
  */
   __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3i2c_3i2c_9res, 0, __pyx_n_s_i2c_res, NULL, __pyx_n_s_i2c, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);

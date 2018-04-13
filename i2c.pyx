@@ -16,8 +16,10 @@ class i2c:
     def read_block(self, cmd, byte):
         return self.sensor.read_i2c_block_data(self.address, cmd, byte)
     def res(self, cmd, timeout):
+        flag = False
         for delay in range(timeout):
             val = self.read(cmd)
-            if(val&0x01): return True
-#            time.sleep(0.001)
-        return False
+            if(val&0x01):
+                flag = True
+            #time.sleep(0.001)
+        return flag

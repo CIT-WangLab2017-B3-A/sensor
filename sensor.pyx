@@ -12,8 +12,11 @@ class sensor:
 
     def ReadDistance(self): #ToF sensor module
         self.ToF.write(0x0000, 0x01)
-        time.sleep(0.1)
-        if self.ToF.res(0x0014, 100):
-            self.data = self.ToF.read_block(0x0014, 12)
-            self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
-            return self.distance
+        time.sleep(0.005)
+        while not self.ToF.res(0x0014, 1):
+            pass
+        #if not self.ToF.res(0x0014, 500):
+        #    return None
+        self.data = self.ToF.read_block(0x0014, 12)
+        self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
+        return self.distance

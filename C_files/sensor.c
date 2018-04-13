@@ -1114,14 +1114,13 @@ static PyObject *__pyx_n_s_write;
 static PyObject *__pyx_pf_6sensor_d16(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6sensor_6sensor___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6sensor_6sensor_2ReadDistance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
-static PyObject *__pyx_float_0_1;
+static PyObject *__pyx_float_0_005;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_8;
 static PyObject *__pyx_int_12;
 static PyObject *__pyx_int_20;
 static PyObject *__pyx_int_41;
-static PyObject *__pyx_int_100;
 static PyObject *__pyx_int_255;
 static PyObject *__pyx_int_32767;
 static PyObject *__pyx_int_32768;
@@ -1282,7 +1281,7 @@ static PyObject *__pyx_pf_6sensor_6sensor___init__(CYTHON_UNUSED PyObject *__pyx
  * 
  *     def ReadDistance(self): #ToF sensor module             # <<<<<<<<<<<<<<
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)
+ *         time.sleep(0.005)
  */
 
 /* Python wrapper */
@@ -1305,15 +1304,16 @@ static PyObject *__pyx_pf_6sensor_6sensor_2ReadDistance(CYTHON_UNUSED PyObject *
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("ReadDistance", 0);
 
   /* "sensor.pyx":14
  * 
  *     def ReadDistance(self): #ToF sensor module
  *         self.ToF.write(0x0000, 0x01)             # <<<<<<<<<<<<<<
- *         time.sleep(0.1)
- *         if self.ToF.res(0x0014, 100):
+ *         time.sleep(0.005)
+ *         while not self.ToF.res(0x0014, 1):
  */
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ToF); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1328,9 +1328,9 @@ static PyObject *__pyx_pf_6sensor_6sensor_2ReadDistance(CYTHON_UNUSED PyObject *
   /* "sensor.pyx":15
  *     def ReadDistance(self): #ToF sensor module
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)             # <<<<<<<<<<<<<<
- *         if self.ToF.res(0x0014, 100):
- *             self.data = self.ToF.read_block(0x0014, 12)
+ *         time.sleep(0.005)             # <<<<<<<<<<<<<<
+ *         while not self.ToF.res(0x0014, 1):
+ *             pass
  */
   __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_time); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1344,109 +1344,101 @@ static PyObject *__pyx_pf_6sensor_6sensor_2ReadDistance(CYTHON_UNUSED PyObject *
 
   /* "sensor.pyx":16
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)
- *         if self.ToF.res(0x0014, 100):             # <<<<<<<<<<<<<<
- *             self.data = self.ToF.read_block(0x0014, 12)
- *             self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
+ *         time.sleep(0.005)
+ *         while not self.ToF.res(0x0014, 1):             # <<<<<<<<<<<<<<
+ *             pass
+ *         #if not self.ToF.res(0x0014, 500):
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ToF); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  while (1) {
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ToF); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_res); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_4 = ((!__pyx_t_3) != 0);
+    if (!__pyx_t_4) break;
+  }
+
+  /* "sensor.pyx":20
+ *         #if not self.ToF.res(0x0014, 500):
+ *         #    return None
+ *         self.data = self.ToF.read_block(0x0014, 12)             # <<<<<<<<<<<<<<
+ *         self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
+ *         return self.distance
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ToF); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_res); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_read_block); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 16, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_data, __pyx_t_1) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_t_3) {
 
-    /* "sensor.pyx":17
- *         time.sleep(0.1)
- *         if self.ToF.res(0x0014, 100):
- *             self.data = self.ToF.read_block(0x0014, 12)             # <<<<<<<<<<<<<<
- *             self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
- *             return self.distance
+  /* "sensor.pyx":21
+ *         #    return None
+ *         self.data = self.ToF.read_block(0x0014, 12)
+ *         self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)             # <<<<<<<<<<<<<<
+ *         return self.distance
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ToF); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_read_block); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_data, __pyx_t_1) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_data); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 10, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyInt_AndObjC(__pyx_t_2, __pyx_int_255, 0xff, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyInt_LshiftObjC(__pyx_t_1, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_data); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_1, 11, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyInt_AndObjC(__pyx_t_5, __pyx_int_255, 0xff, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyNumber_Or(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_distance, __pyx_t_5) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "sensor.pyx":18
- *         if self.ToF.res(0x0014, 100):
- *             self.data = self.ToF.read_block(0x0014, 12)
- *             self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)             # <<<<<<<<<<<<<<
- *             return self.distance
+  /* "sensor.pyx":22
+ *         self.data = self.ToF.read_block(0x0014, 12)
+ *         self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
+ *         return self.distance             # <<<<<<<<<<<<<<
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_data); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 10, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_AndObjC(__pyx_t_2, __pyx_int_255, 0xff, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_LshiftObjC(__pyx_t_1, __pyx_int_8, 8, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_data); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_1, 11, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_AndObjC(__pyx_t_4, __pyx_int_255, 0xff, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyNumber_Or(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_distance, __pyx_t_4) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-    /* "sensor.pyx":19
- *             self.data = self.ToF.read_block(0x0014, 12)
- *             self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
- *             return self.distance             # <<<<<<<<<<<<<<
- */
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_distance); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_r = __pyx_t_4;
-    __pyx_t_4 = 0;
-    goto __pyx_L0;
-
-    /* "sensor.pyx":16
- *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)
- *         if self.ToF.res(0x0014, 100):             # <<<<<<<<<<<<<<
- *             self.data = self.ToF.read_block(0x0014, 12)
- *             self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
- */
-  }
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_distance); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_r = __pyx_t_5;
+  __pyx_t_5 = 0;
+  goto __pyx_L0;
 
   /* "sensor.pyx":13
  *         self.ToF = i2c(0x29, 0x01)
  * 
  *     def ReadDistance(self): #ToF sensor module             # <<<<<<<<<<<<<<
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)
+ *         time.sleep(0.005)
  */
 
   /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_AddTraceback("sensor.sensor.ReadDistance", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -1544,8 +1536,8 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     def ReadDistance(self): #ToF sensor module
  *         self.ToF.write(0x0000, 0x01)             # <<<<<<<<<<<<<<
- *         time.sleep(0.1)
- *         if self.ToF.res(0x0014, 100):
+ *         time.sleep(0.005)
+ *         while not self.ToF.res(0x0014, 1):
  */
   __pyx_tuple__2 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_1); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
@@ -1554,33 +1546,33 @@ static int __Pyx_InitCachedConstants(void) {
   /* "sensor.pyx":15
  *     def ReadDistance(self): #ToF sensor module
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)             # <<<<<<<<<<<<<<
- *         if self.ToF.res(0x0014, 100):
- *             self.data = self.ToF.read_block(0x0014, 12)
+ *         time.sleep(0.005)             # <<<<<<<<<<<<<<
+ *         while not self.ToF.res(0x0014, 1):
+ *             pass
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_float_0_1); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_float_0_005); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
   /* "sensor.pyx":16
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)
- *         if self.ToF.res(0x0014, 100):             # <<<<<<<<<<<<<<
- *             self.data = self.ToF.read_block(0x0014, 12)
- *             self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
+ *         time.sleep(0.005)
+ *         while not self.ToF.res(0x0014, 1):             # <<<<<<<<<<<<<<
+ *             pass
+ *         #if not self.ToF.res(0x0014, 500):
  */
-  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_int_20, __pyx_int_100); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_int_20, __pyx_int_1); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "sensor.pyx":17
- *         time.sleep(0.1)
- *         if self.ToF.res(0x0014, 100):
- *             self.data = self.ToF.read_block(0x0014, 12)             # <<<<<<<<<<<<<<
- *             self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
- *             return self.distance
+  /* "sensor.pyx":20
+ *         #if not self.ToF.res(0x0014, 500):
+ *         #    return None
+ *         self.data = self.ToF.read_block(0x0014, 12)             # <<<<<<<<<<<<<<
+ *         self.distance = ((self.data[10]&0xff)<<8) | (self.data[11]&0xff)
+ *         return self.distance
  */
-  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_int_20, __pyx_int_12); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_int_20, __pyx_int_12); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
@@ -1613,7 +1605,7 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     def ReadDistance(self): #ToF sensor module             # <<<<<<<<<<<<<<
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)
+ *         time.sleep(0.005)
  */
   __pyx_tuple__10 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
@@ -1628,14 +1620,13 @@ static int __Pyx_InitCachedConstants(void) {
 
 static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  __pyx_float_0_1 = PyFloat_FromDouble(0.1); if (unlikely(!__pyx_float_0_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_float_0_005 = PyFloat_FromDouble(0.005); if (unlikely(!__pyx_float_0_005)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_8 = PyInt_FromLong(8); if (unlikely(!__pyx_int_8)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_12 = PyInt_FromLong(12); if (unlikely(!__pyx_int_12)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_20 = PyInt_FromLong(20); if (unlikely(!__pyx_int_20)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_41 = PyInt_FromLong(41); if (unlikely(!__pyx_int_41)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_100 = PyInt_FromLong(100); if (unlikely(!__pyx_int_100)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_255 = PyInt_FromLong(255); if (unlikely(!__pyx_int_255)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_32767 = PyInt_FromLong(32767L); if (unlikely(!__pyx_int_32767)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_32768 = PyInt_FromLong(32768L); if (unlikely(!__pyx_int_32768)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -1862,7 +1853,7 @@ static int __pyx_pymod_exec_sensor(PyObject *__pyx_pyinit_module)
  * 
  *     def ReadDistance(self): #ToF sensor module             # <<<<<<<<<<<<<<
  *         self.ToF.write(0x0000, 0x01)
- *         time.sleep(0.1)
+ *         time.sleep(0.005)
  */
   __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6sensor_6sensor_3ReadDistance, 0, __pyx_n_s_sensor_ReadDistance, NULL, __pyx_n_s_sensor, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
